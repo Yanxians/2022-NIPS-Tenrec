@@ -26,10 +26,12 @@ def select_sampler(train_data, val_data, test_data, user_count, item_count, args
 def mtl_data(path=None, args=None):
     if not path:
         return
+    # 没有读入share，follow和watch_times
     df = pd.read_csv(path, usecols=["user_id", "item_id", "click", "like", "video_category", "gender", "age", "hist_1", "hist_2",
                        "hist_3", "hist_4", "hist_5", "hist_6", "hist_7", "hist_8", "hist_9", "hist_10"])
     # df = df[:100000]
     df['video_category'] = df['video_category'].astype(str)
+    # sample_data降采样处理，取两倍正样本数量的负样本，然后重新打乱组装
     df = sample_data(df)
     if args.mtl_task_num == 2:
         label_columns = ['click', 'like']
@@ -1283,4 +1285,5 @@ def get_test_loader(dataset, args):
     else:
         dataloader = data_utils.DataLoader(dataset, batch_size=args.test_batch_size, shuffle=False, pin_memory=True)
     return dataloader
+
 
