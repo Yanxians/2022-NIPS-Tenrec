@@ -479,6 +479,7 @@ if __name__ == "__main__":
     device = torch.device(args.device)
     # if 'bert' in args.model_name:
     set_seed(args.seed)
+    # SummaryWriter, torch组件，用于记录中间结果和生成图像。
     writer = SummaryWriter()
     print(args)
     if args.task_name == 'ctr':
