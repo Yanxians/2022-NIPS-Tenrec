@@ -58,6 +58,7 @@ def select_sampler(train_data, val_data, test_data, user_count, item_count, args
 def get_data(args):
     name = args.task_name
     path = args.dataset_path
+    # 生成一个局部随机数发生器rng，用于生成局部随机数
     rng = random.Random(args.seed)
     if name == 'ctr':
         if args.model_name == 'din' or args.model_name == 'dien':
@@ -228,7 +229,11 @@ def get_data(args):
         valid_dataloader = get_val_loader(valid_dataset, args)
         test_dataloader = get_test_loader(test_dataset, args)
         return train_dataloader, valid_dataloader, test_dataloader
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     elif name == 'mtl':
+#mtl_data:返回处理后的训练集，验证集，测试集，用户数据的特征维度，列索引和物品数据的特征维度，列索引。
+#how：将整体数据分成正样本和负样本两部分，然后根据正样本的数量抽取正样本数量*2的负样本。然后将Category列转化成str类型的数据。
+#再使用labelEncoder实例，对每一列数据进行Encoder。然后制作两个字典，用于存储列索引和数据的特征维度。
         train_data, val_data, test_data, user_feature_dict, item_feature_dict = mtl_data(path, args)
         if args.mtl_task_num == 2:
             train_dataset = (train_data.iloc[:, :-2].values, train_data.iloc[:, -2].values, train_data.iloc[:, -1].values)
