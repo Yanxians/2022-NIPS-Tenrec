@@ -234,8 +234,10 @@ def get_data(args):
 #mtl_data:返回处理后的训练集，验证集，测试集，用户数据的特征维度，列索引和物品数据的特征维度，列索引。
 #how：将整体数据分成正样本和负样本两部分，然后根据正样本的数量抽取正样本数量*2的负样本。然后将Category列转化成str类型的数据。
 #再使用labelEncoder实例，对每一列数据进行Encoder。然后制作两个字典，用于存储列索引和数据的特征维度。
+#最后先打乱，然后按8:1:1划分训练集、验证集和测试集。
         train_data, val_data, test_data, user_feature_dict, item_feature_dict = mtl_data(path, args)
         if args.mtl_task_num == 2:
+            #将train_data, val_data, test_data划分成X，Y1，Y2.
             train_dataset = (train_data.iloc[:, :-2].values, train_data.iloc[:, -2].values, train_data.iloc[:, -1].values)
             val_dataset = (val_data.iloc[:, :-2].values, val_data.iloc[:, -2].values, val_data.iloc[:, -1].values)
             test_dataset = (test_data.iloc[:, :-2].values, test_data.iloc[:, -2].values, test_data.iloc[:, -1].values)
