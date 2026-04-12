@@ -520,7 +520,7 @@ if __name__ == "__main__":
             # print('inference_time:', model.all_time)
         writer.close()
     elif args.task_name == 'mtl':
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
         train_dataloader, val_dataloader, test_dataloader, user_feature_dict, item_feature_dict = get_data(args)
         if args.mtl_task_num == 2:
             num_task = 2
