@@ -30,6 +30,8 @@ class MMOE(nn.Module):
         :param expert_activation: activation function like 'relu' or 'sigmoid'
         :param num_task: int default 2 multitask numbers
         """
+        #继承
+        #相当于super().__init__()
         super(MMOE, self).__init__()
         # check input parameters
         if user_feature_dict is None or item_feature_dict is None:
@@ -51,6 +53,8 @@ class MMOE(nn.Module):
             if num[0] > 1:
                 user_cate_feature_nums += 1
                 setattr(self, user_cate, nn.Embedding(num[0], emb_dim))
+                #相当于self.age = nn.Embedding[10,128]
+                #这样可以循环自动化配置
         for item_cate, num in self.item_feature_dict.items():
             if num[0] > 1:
                 item_cate_feature_nums += 1
